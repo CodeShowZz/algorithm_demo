@@ -11,11 +11,16 @@ import java.util.Arrays;
  */
 public class ShellSort {
 
+    /**
+     * 希尔排序由插入排序演变而来,需要特别注意的是j在通用场景下的判断条件的边界值
+     * @param nums
+     * @param n
+     */
     public void shellSort(int[] nums, int n) {
         int len = nums.length;
         for (int interval = n / 2; interval > 0; interval /= 2) {
             for (int i = interval; i < len; i++) {
-                for (int j = i; j > 0 && j - interval >= 0; j = j - interval) {
+                for (int j = i;  j >= interval; j = j - interval) {
                     if (nums[j] < nums[j - interval]) {
                         ArrayUtil.swap(nums, j, j - interval);
                     } else {

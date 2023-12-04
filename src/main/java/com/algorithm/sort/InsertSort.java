@@ -18,7 +18,7 @@ public class InsertSort {
         }
         int len = nums.length;
         for (int i = 1; i < len; i++) {
-            for (int j = i; j > 0; j--) {
+            for (int j = i; j >= 1; j--) {
                 if (nums[j] < nums[j - 1]) {
                     ArrayUtil.swap(nums, j, j - 1);
                 } else {
