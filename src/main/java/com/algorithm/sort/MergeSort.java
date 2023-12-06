@@ -1,92 +1,67 @@
 package com.algorithm.sort;
 
+import java.util.Arrays;
+
 /**
  * @description:
  * @author: Linhuang
- * @date: 2023-12-05 18:20
+ * @date: 2023-12-06 9:26
  */
 public class MergeSort {
 
-    // Merge two subarrays L and M into arr
-    void merge(int arr[], int p, int q, int r) {
-
-        // Create L ← A[p..q] and M ← A[q+1..r]
-        int n1 = q - p + 1;
-        int n2 = r - q ;
-
-        int L[] = new int[n1];
-        int M[] = new int[n2];
-
-        for (int i = 0; i < n1; i++)
-            L[i] = arr[p + i];
-        for (int j = 0; j < n2; j++)
-            M[j] = arr[q + 1 + j];
-
-        // Maintain current index of sub-arrays and main array
-        int i, j, k;
-        i = 0;
-        j = 0;
-        k = p;
-
-        // Until we reach either end of either L or M, pick larger among
-        // elements L and M and place them in the correct position at A[p..r]
-        while (i < n1 && j < n2) {
-            if (L[i] <= M[j]) {
+    public static void merge(int[] arr, int left, int middle, int right) {
+        int lenL = middle - left + 1;
+        int lenR = right - middle;
+        int[] L = new int[lenL];
+        int[] R = new int[lenR];
+        for (int i = 0; i < lenL; i++) {
+            L[i] = arr[left + i];
+        }
+        for (int j = 0; j < lenR; j++) {
+            R[j] = arr[middle + j + 1];
+        }
+        int i = 0;
+        int j = 0;
+        int k = left;
+        while (i < lenL && j < lenR) {
+            if (L[i] > R[j]) {
+                arr[k] = R[j];
+                j++;
+            } else {
                 arr[k] = L[i];
                 i++;
-            } else {
-                arr[k] = M[j];
-                j++;
             }
             k++;
         }
-
-        // When we run out of elements in either L or M,
-        // pick up the remaining elements and put in A[p..r]
-        while (i < n1) {
+        while (i < lenL) {
             arr[k] = L[i];
             i++;
             k++;
         }
-
-        while (j < n2) {
-            arr[k] = M[j];
+        while (j < lenR) {
+            arr[k] = R[j];
             j++;
             k++;
         }
     }
 
-    // Divide the array into two subarrays, sort them and merge them
-    void mergeSort(int arr[], int l, int r) {
-        if (l < r) {
-
-            // m is the point where the array is divided into two subarrays
-            int m = (l + r) / 2;
-
-            mergeSort(arr, l, m);
-            mergeSort(arr, m + 1, r);
-
-            // Merge the sorted subarrays
-            merge(arr, l, m, r);
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int middle = (left + right) / 2;
+            mergeSort(arr, left, middle);
+            mergeSort(arr, middle + 1, right);
+            merge(arr, left, middle, right);
         }
     }
 
-    // Print the array
-    static void printArray(int arr[]) {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
-    }
-
-    // Driver program
     public static void main(String args[]) {
         int arr[] = {6, 5, 12, 10, 9, 1};
 
-        MergeSort ob = new MergeSort();
-        ob.mergeSort(arr, 0, arr.length - 1);
+        MergeSort.mergeSort(arr, 0, arr.length - 1);
 
         System.out.println("Sorted array:");
-        printArray(arr);
+        System.out.println(Arrays.toString(arr));
     }
+
+
 }
